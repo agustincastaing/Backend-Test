@@ -1,0 +1,50 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  firstName         String
+  birth_date   DateTime
+  role         Role @default(CLIENT)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  active    Boolean @default(false)
+  
+}
+
+model Insurable {
+  id           String   @id @default(uuid())
+  Section         Section
+  Insured_amount Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Policy Policy[]
+}
+
+model Policy {
+  id String   @id @default(uuid())
+  policyNumber Int
+  insurable Insurable @relation(fields: [insurableId], references: [id])
+  insurableId String @unique
+}
+
+
+enum Role {
+  CLIENT
+  ADMIN
+}
+
+enum Section {
+  MOTORBIKE
+  CLASSIC_CAR
+}
