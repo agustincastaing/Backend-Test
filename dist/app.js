@@ -42,7 +42,9 @@ const utils_1 = require("./api/utils");
 const exceptions_1 = require("./exceptions");
 const sentry_1 = require("./api/config/sentry");
 const path = __importStar(require("path"));
+const users_controllers_1 = require("./api/controllers/users-controllers");
 const dev_envs = ['development', 'test'];
+const userController = new users_controllers_1.UserController();
 let server = new inversify_express_utils_1.InversifyExpressServer(inversify_config_1.default);
 server.setConfig(app => {
     if (dev_envs.indexOf(environment_1.NODE_ENV) === -1)

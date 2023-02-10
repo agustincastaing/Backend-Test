@@ -28,6 +28,8 @@ exports.UserController = void 0;
 const inversify_express_utils_1 = require("inversify-express-utils");
 const authorization_middleware_1 = __importDefault(require("./../middlewares/authorization-middleware"));
 const Roles_1 = __importDefault(require("./../core/common/Roles"));
+const client_1 = require("@prisma/client");
+const prisma = new client_1.PrismaClient();
 let UserController = class UserController extends inversify_express_utils_1.BaseHttpController {
     constructor() {
         super();
@@ -42,6 +44,53 @@ let UserController = class UserController extends inversify_express_utils_1.Base
             }
         });
     }
+    getDeactivatedUsers(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const deactivatedUsers = yield prisma.user.findMany({ where: { active: false } });
+                return res.status(200).json({ deactivated_users: deactivatedUsers });
+            }
+            catch (err) {
+                return res.status(400).json({ error: err });
+            }
+        });
+    }
+    getUser(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const userId = req.params.id;
+            if (userId) {
+                try {
+                    const user = yield prisma.user.findMany({ where: { id: userId } });
+                    user.length === 0 ? res.status(200).json({ error: `No user with ID "${userId}"` }) : res.status(200).json({ userID: user });
+                    return;
+                }
+                catch (err) {
+                    return res.status(400).json({ error: err });
+                }
+            }
+            else {
+                try {
+                    const users = yield prisma.user.findMany({ where: { active: true } });
+                    return res.status(200).json({ allUsers: users });
+                }
+                catch (error) {
+                    return res.status(400).json({ error: error });
+                }
+            }
+        });
+    }
+    postUser(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const newUser = req.body;
+            try {
+                const insert = yield prisma.user.create({ data: newUser });
+                return res.status(200).json({ Hecho: insert });
+            }
+            catch (error) {
+                return res.status(400).json({ error: error });
+            }
+        });
+    }
 };
 __decorate([
     (0, inversify_express_utils_1.httpGet)("/clients/:id?", (0, authorization_middleware_1.default)([Roles_1.default.SUPERADMIN, Roles_1.default.ADMIN, Roles_1.default.PRODUCTOR])),
@@ -51,6 +100,28 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "clients", null);
+__decorate([
+    (0, inversify_express_utils_1.httpGet)("/deactivated"),
+    __param(0, (0, inversify_express_utils_1.request)()),
+    __param(1, (0, inversify_express_utils_1.response)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "getDeactivatedUsers", null);
+__decorate([
+    (0, inversify_express_utils_1.httpGet)("/:id?"),
+    __param(0, (0, inversify_express_utils_1.request)()),
+    __param(1, (0, inversify_express_utils_1.response)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "getUser", null);
+__decorate([
+    (0, inversify_express_utils_1.httpPost)("/"),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "postUser", null);
 UserController = __decorate([
     (0, inversify_express_utils_1.controller)("/users"),
     __metadata("design:paramtypes", [])

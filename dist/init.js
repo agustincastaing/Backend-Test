@@ -44,12 +44,11 @@ const logger_1 = __importDefault(require("./api/config/logger"));
 const app_1 = require("./app");
 const jobs_1 = require("./jobs");
 const environment_1 = require("./api/config/environment");
-const environment_2 = require("./api/config/environment");
 const start = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         //Database.setConnection(await createConnection());
         logger_1.default.info("Backend connected to database...");
-        if (environment_2.INIT_JOBS) {
+        if (environment_1.INIT_JOBS) {
             logger_1.default.info('CRON jobs are running...');
             (0, jobs_1.initJobs)();
         }
@@ -57,6 +56,6 @@ const start = () => __awaiter(void 0, void 0, void 0, function* () {
     catch (err) {
         logger_1.default.error(err);
     }
-    app_1.app.listen(environment_1.PORT, () => logger_1.default.info(`Server running on port ${environment_1.PORT}...`));
+    app_1.app.listen(3001, () => logger_1.default.info(`Server running on port 3001...`));
 });
 start();
