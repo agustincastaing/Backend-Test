@@ -26,32 +26,30 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.verifyAuthToken = void 0;
 const jwt = __importStar(require("jsonwebtoken"));
 const environment_1 = require("../config/environment");
-const verifyAuthToken = (token) => {
-    if (token.startsWith('Bearer ')) {
-        token = token.slice(7, token.length);
-    }
+const verifyAuthToken = (header) => {
+    const token = (/^Bearer /gi.test(header) && header.replaceAll("Bearer ", "")) || false;
+    if (token === false)
+        return false;
     return jwt.verify(token, environment_1.JWT_SECRET);
 };
 exports.verifyAuthToken = verifyAuthToken;
 const Authorize = (roles) => {
     return (req, res, next) => {
-        if (!req.headers.authorization)
-            return res.status(403).json({ status: 403, message: 'Unauthorized' });
-        let token = req.headers.authorization;
-        let user;
         try {
-            user = (0, exports.verifyAuthToken)(token);
+            if (!req.headers.authorization)
+                return res.status(403).json({ status: 403, response: "Unauthorized1" });
+            let header = req.headers.authorization;
+            let user = (0, exports.verifyAuthToken)(header);
+            if (!user)
+                return res.status(403).json({ status: 403, response: "Unauthorized2" });
+            if (!roles.includes(user.role) && !Array.isArray(roles))
+                return res.status(403).json({ status: 403, response: "Unauthorized3" });
+            req.user = user;
+            next();
         }
         catch (err) {
-            return res.status(403).json({ status: 403, message: 'Unauthorized' });
+            return res.status(403).json({ status: 403, response: "Unauthorized4" });
         }
-        if (!user)
-            return res.status(403).json({ status: 403, message: 'Unauthorized' });
-        if (roles && roles.length && !roles.includes(user.role)) {
-            return res.status(403).json({ status: 403, message: 'Unauthorized' });
-        }
-        req.user = user;
-        next();
     };
 };
 exports.default = Authorize;
