@@ -14,7 +14,12 @@ import {HttpException} from "./exceptions";
 import {InitSentry} from "./api/config/sentry";
 import * as path from 'path'
 
+import { UserController } from './api/controllers/users-controllers';
+
 const dev_envs = ['development','test'];
+
+const userController = new UserController();
+
 
 let server = new InversifyExpressServer(container);
 server.setConfig(app => {
@@ -41,7 +46,9 @@ server.setConfig(app => {
 let app = server.build();
 
 if(SHOW_API_DOCS) app.use("/docs", swaggerUi.serve, swaggerUi.setup(specs));
+
 app.get("/", (req: Request, res: Response) => res.json({ status: 'Activar REST API runing ok' }))
 app.use('*', (req: Request, res: Response) => errorHandler(new HttpException(404, 'Resource not found'), res))
+
 
 export { app };

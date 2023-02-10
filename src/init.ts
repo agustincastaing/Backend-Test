@@ -20,7 +20,7 @@ const start = async () => {
 	} catch (err) {
 		logger.error(err);
 	}
-	app.listen(PORT, () => logger.info(`Server running on port ${PORT}...`));
+	app.listen(3001, () => logger.info(`Server running on port 3001...`));
 };
 
 start();
