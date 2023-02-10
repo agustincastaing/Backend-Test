@@ -41,6 +41,9 @@ model Policy {
 enum Role {
   CLIENT
   ADMIN
+  SUPERADMIN
+  PRODUCTOR
+  INSPECTOR
 }
 
 enum Section {
