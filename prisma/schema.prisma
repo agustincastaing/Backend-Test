@@ -11,37 +11,39 @@ datasource db {
 }
 
 model User {
-  id           String   @id @default(uuid())
-  email        String   @unique
-  firstName         String
-  birth_date   DateTime
-  role         Role @default(CLIENT)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  active    Boolean @default(false)
-  
+  id         String   @id @default(uuid())
+  email      String   @unique
+  firstName  String
+  birth_date DateTime
+  role       Role     @default(CLIENT)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  active     Boolean  @default(false)
+  password   String
 }
 
 model Insurable {
-  id           String   @id @default(uuid())
-  Section         Section
+  id             String   @id @default(uuid())
+  Section        Section
   Insured_amount Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  Policy Policy[]
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  Policy         Policy[]
 }
 
 model Policy {
-  id String   @id @default(uuid())
+  id           String    @id @default(uuid())
   policyNumber Int
-  insurable Insurable @relation(fields: [insurableId], references: [id])
-  insurableId String @unique
+  insurable    Insurable @relation(fields: [insurableId], references: [id])
+  insurableId  String    @unique
 }
-
 
 enum Role {
   CLIENT
   ADMIN
+  SUPERADMIN
+  PRODUCTOR
+  INSPECTOR
 }
 
 enum Section {

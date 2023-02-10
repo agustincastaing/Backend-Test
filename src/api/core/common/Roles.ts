@@ -1,10 +1,3 @@
+import { Role } from "@prisma/client";
 
-enum Roles {
-    SUPERADMIN = 'SUPERADMIN',
-    ADMIN = 'ADMIN',
-    PRODUCTOR = 'PRODUCTOR',
-    CLIENT = 'CLIENT',
-    INSPECTOR = 'INSPECTOR'
-}
-
-export default Roles
+export default Role;

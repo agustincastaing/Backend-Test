@@ -1,12 +1,12 @@
 "use strict";
 /**
-* @swagger
-* securityDefinitions:
-*  Bearer:
-*   type: apiKey
-*   name: Authorization
-*   in: header
-*/
+ * @swagger
+ * securityDefinitions:
+ *  Bearer:
+ *   type: apiKey
+ *   name: Authorization
+ *   in: header
+ */
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -23,3 +23,5 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./users-controllers"), exports);
+__exportStar(require("./superAdmin-controllers"), exports);
+__exportStar(require("./admin-controllers"), exports);

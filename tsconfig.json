@@ -2,7 +2,7 @@
 	"compilerOptions": {
 		"target": "ES2016",
 		"module": "commonjs",
-		"lib": ["es6", "dom"],
+		"lib": ["es2021", "dom"],
 		"outDir": "./dist",
 		"rootDir": "./src",
 		"strict": true,
@@ -21,7 +21,7 @@
 		"esModuleInterop": true,
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true,
-		"suppressImplicitAnyIndexErrors": true
+		//"suppressImplicitAnyIndexErrors": true
 	},
 	"include": ["src/**/*"],
 	"exclude": ["node_modules", "tarifas.json", "**/*.test.ts", "**/*.spec.ts"]

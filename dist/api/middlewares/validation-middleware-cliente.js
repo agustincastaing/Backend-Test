@@ -31,32 +31,43 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-require("reflect-metadata");
-require("module-alias/register");
-const dotenv = __importStar(require("dotenv"));
-dotenv.config();
-const logger_1 = __importDefault(require("./api/config/logger"));
-//import { createConnection } from "typeorm";
-const app_1 = require("./app");
-const jobs_1 = require("./jobs");
-const environment_1 = require("./api/config/environment");
-const environment_2 = require("./api/config/environment");
-const start = () => __awaiter(void 0, void 0, void 0, function* () {
+exports.validationSignIn = exports.validationSignUp = void 0;
+const user_repository_prisma_1 = require("../respositoty/user.repository.prisma");
+const user_validation_1 = __importStar(require("../validation/user.validation"));
+const validationSignUp = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        //Database.setConnection(await createConnection());
-        logger_1.default.info("Backend connected to database...");
-        if (environment_2.INIT_JOBS) {
-            logger_1.default.info('CRON jobs are running...');
-            (0, jobs_1.initJobs)();
+        const isARepeatCustomer = yield (0, user_repository_prisma_1.repeatCustomerByEmail)(req.body["email"]);
+        if (isARepeatCustomer)
+            return res
+                .status(400)
+                .json({ status: 400, response: "the client is already registered" });
+        if ((0, user_validation_1.default)(req.body)) {
+            return res.status(400).json({
+                status: 400,
+                response: "the data of the new client is incorrect",
+            });
         }
+        next();
     }
     catch (err) {
-        logger_1.default.error(err);
+        return res.status(500).json({
+            status: 500,
+            response: err.message,
+        });
     }
-    app_1.app.listen(environment_1.PORT, () => logger_1.default.info(`Server running on port ${environment_1.PORT}...`));
 });
-start();
+exports.validationSignUp = validationSignUp;
+const validationSignIn = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const { email, password } = req.body;
+    if ((0, user_validation_1.isNotEmail)(email))
+        return res
+            .status(400)
+            .json({ status: 400, response: "wrong email or password" });
+    if ((0, user_validation_1.isNotPassword)(password))
+        return res
+            .status(400)
+            .json({ status: 400, response: "wrong email or password" });
+    next();
+});
+exports.validationSignIn = validationSignIn;
