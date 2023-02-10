@@ -1,0 +1,79 @@
+### SignUP CLIENT
+
+
+POST  http://localhost:3000/users/signup
+Content-Type: application/json
+
+{
+  "email": "e@gmial.com",
+  "firstName": "Ezequiel",
+  "birth_date": "2023-02-10T06:26:42.510Z",
+  "password": "stringA12"
+}
+
+
+
+### SignIn CLIENT
+POST http://localhost:3000/users/signin
+Content-Type: application/json
+
+{
+  "email": "e@gmial.com",
+  "password": "stringA12"
+}
+
+###Profile CLIENT
+GET http://localhost:3000/users/profile
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiQ0xJRU5UIiwiaWQiOiI3NDYyYzE2ZC02NDAwLTQ4NGUtYTRmOC1lMWFmNzc4ZjJlNzgiLCJpYXQiOjE2NzYwMzY5NjcsImV4cCI6MTY3NjEyMzM2N30.9HZYm9Ha8wngVHjXZODOwv2Im_ACvITNnGf7O8Cl5FQ
+###Set Role SUPERADMIN
+PUT  http://localhost:3000/superAdmin/set_role
+Content-Type: application/json
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiQ0xJRU5UIiwiaWQiOiI3NDYyYzE2ZC02NDAwLTQ4NGUtYTRmOC1lMWFmNzc4ZjJlNzgiLCJpYXQiOjE2NzYwMzY5NjcsImV4cCI6MTY3NjEyMzM2N30.9HZYm9Ha8wngVHjXZODOwv2Im_ACvITNnGf7O8Cl5FQ
+
+
+{
+  "id": "7462c16d-6400-484e-a4f8-e1af778f2e78",
+  "role":"ADMIN"
+}
+
+###
+
+
+####Activate User ADMIN
+PUT  http://localhost:3000/admin/activate_client/7462c16d-6400-484e-a4f8-e1af778f2e78
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiQ0xJRU5UIiwiaWQiOiI3NDYyYzE2ZC02NDAwLTQ4NGUtYTRmOC1lMWFmNzc4ZjJlNzgiLCJpYXQiOjE2NzYwMzY5NjcsImV4cCI6MTY3NjEyMzM2N30.9HZYm9Ha8wngVHjXZODOwv2Im_ACvITNnGf7O8Cl5FQ
+
+
+
+####Deactivated User ADMIN
+PUT http://localhost:3000/admin/disable_client/7462c16d-6400-484e-a4f8-e1af778f2e78
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiQ0xJRU5UIiwiaWQiOiI3NDYyYzE2ZC02NDAwLTQ4NGUtYTRmOC1lMWFmNzc4ZjJlNzgiLCJpYXQiOjE2NzYwMzY5NjcsImV4cCI6MTY3NjEyMzM2N30.9HZYm9Ha8wngVHjXZODOwv2Im_ACvITNnGf7O8Cl5FQ
+
+
+
+
+####Find All User ADMIN
+GET http://localhost:3000/admin/find/clients
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiQ0xJRU5UIiwiaWQiOiI3NDYyYzE2ZC02NDAwLTQ4NGUtYTRmOC1lMWFmNzc4ZjJlNzgiLCJpYXQiOjE2NzYwMzY5NjcsImV4cCI6MTY3NjEyMzM2N30.9HZYm9Ha8wngVHjXZODOwv2Im_ACvITNnGf7O8Cl5FQ
+
+ ####
+
+####Find by Id ADMIN
+GET http://localhost:3000/admin/find/clients/e990e664-7f0b-43d9-b04a-e014f5840e5e
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiQ0xJRU5UIiwiaWQiOiI3NDYyYzE2ZC02NDAwLTQ4NGUtYTRmOC1lMWFmNzc4ZjJlNzgiLCJpYXQiOjE2NzYwMzY5NjcsImV4cCI6MTY3NjEyMzM2N30.9HZYm9Ha8wngVHjXZODOwv2Im_ACvITNnGf7O8Cl5FQ
+
+ ####
+
+####Find All filter activate ADMIN
+GET http://localhost:3000/admin/find/clients/activate
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiQ0xJRU5UIiwiaWQiOiI3NDYyYzE2ZC02NDAwLTQ4NGUtYTRmOC1lMWFmNzc4ZjJlNzgiLCJpYXQiOjE2NzYwMzY5NjcsImV4cCI6MTY3NjEyMzM2N30.9HZYm9Ha8wngVHjXZODOwv2Im_ACvITNnGf7O8Cl5FQ
+####
+
+
+####Find All filter deactivated ADMIN
+GET http://localhost:3000/admin/find/clients/deactivated
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiQ0xJRU5UIiwiaWQiOiI3NDYyYzE2ZC02NDAwLTQ4NGUtYTRmOC1lMWFmNzc4ZjJlNzgiLCJpYXQiOjE2NzYwMzY5NjcsImV4cCI6MTY3NjEyMzM2N30.9HZYm9Ha8wngVHjXZODOwv2Im_ACvITNnGf7O8Cl5FQ
+####
+
+
+
