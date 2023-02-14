@@ -7,7 +7,7 @@ import { genSaltSync, hashSync } from "bcrypt-ts";
 import Joi from "@hapi/joi";
 
 type SignUpFunction = (newClient: ClientRegister) => Promise<ClientSignUp>;
-
+type functionIdUser = ( id: EntityClient["id"]) => Promise<ClientSignUp | null>;
 
 const validateinput = Joi.object({
   email: Joi.string().min(6).max(255).required().email(),
@@ -33,7 +33,31 @@ export const signUp: SignUpFunction = async (userData) => {
       },
     });
     return newUser
-  } catch (error: any) {
-    throw new Error(error.details[0].message);
+  } catch (err: any) {
+    throw new Error(err.details[0].message);
   }
 };
+
+export const getUserId:functionIdUser = async (id) => {
+    try {
+      
+      const getUser = await prisma.user.findUnique({where: {id}})
+      return getUser
+
+    } catch (err: any) {
+      throw new Error(err.details[0].message);
+    }
+  };
+
+  export const inactiveUser = async () => {
+    try {
+      
+      const getInactiveUsers = await prisma.user.findMany({where: {"active": false}})
+      return getInactiveUsers
+
+    } catch (err: any) {
+      throw new Error(err.details[0].message);
+    }
+  };
+
+  

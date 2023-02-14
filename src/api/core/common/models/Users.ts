@@ -10,6 +10,6 @@ export default interface EntityClient {
   password: string;
 }
 
-export interface ClientSignUp  extends Pick<EntityClient, "email" | "firstName" | "id" | "birth_date" | "password"> {}
+export interface ClientSignUp  extends Pick<EntityClient, "role" | "email" | "firstName" | "id" | "birth_date" | "password"> {}
 export interface ClientRegister extends Omit<EntityClient, "id" | "role" | "active"> {}
 

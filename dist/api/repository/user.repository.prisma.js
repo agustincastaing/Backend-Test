@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.signUp = void 0;
+exports.getUserId = exports.signUp = void 0;
 const database_1 = __importDefault(require("../config/database"));
 const bcrypt_ts_1 = require("bcrypt-ts");
 const joi_1 = __importDefault(require("@hapi/joi"));
@@ -39,8 +39,18 @@ const signUp = (userData) => __awaiter(void 0, void 0, void 0, function* () {
         });
         return newUser;
     }
-    catch (error) {
-        throw new Error(error.details[0].message);
+    catch (err) {
+        throw new Error(err.details[0].message);
     }
 });
 exports.signUp = signUp;
+const getUserId = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const getUser = yield database_1.default.user.findUnique({ where: { id } });
+        return getUser;
+    }
+    catch (err) {
+        throw new Error(err.details[0].message);
+    }
+});
+exports.getUserId = getUserId;
