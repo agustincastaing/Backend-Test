@@ -19,7 +19,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   active    Boolean @default(false)
-  
+  password String
 }
 
 model Insurable {
